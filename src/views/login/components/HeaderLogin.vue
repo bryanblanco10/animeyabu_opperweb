@@ -6,7 +6,7 @@
         anime<strong class="__strong">yabu.</strong>
       </div>
     </div>
-    <div class="__vector">
+    <div class="__vector" @click.prevent="() => $emit('back')">
       <img src="@/assets/images/barra.png" />
       <img src="@/assets/images/flecha.png" />
     </div>
@@ -33,14 +33,11 @@ export default {}
     margin-left: 14px;
   }
 
-  .__strong {
-    color: #E487FB;
-  }
-
   .__vector {
     position: relative;
     top: 24px;
     margin-left: 10px;
+    cursor: pointer;
   }
 
   /* ............. */
@@ -50,7 +47,21 @@ export default {}
   {}
   /*** VERSION TABLETS ***/
   @media only screen and (min-width: 768px) and (max-width: 992px)
-  {}
+  {
+    .__logo {
+      display: none;
+    }
+
+    .name_application {
+      display: none;
+    }
+
+    .__vector {
+      position: relative;
+      top: 10px;
+      margin-left: 10px;
+    }
+  }
   /*** VERSION CELULAR ***/
   @media only screen and (max-width: 767px)
   {

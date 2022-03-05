@@ -10,13 +10,15 @@
             <b-col lg="12" md="12" sm="12">
               <div role="group">
                 <label for="name" class="label_input">Email</label>
-                <b-form-input id="name" type="email" placeholder="usuario@" />
+                <b-form-input id="name" type="email" placeholder="usuario@" autofocus />
               </div>
             </b-col>
             <b-col lg="12" md="12" sm="12">
-              <div role="group">
+              <div role="group" style="height: 100px;">
                 <label for="password" class="label_input">Contraseña</label>
-                <b-form-input id="password" type="password" />
+                <b-form-input id="password" :type="typeInput" />
+                <b-icon-eye-fill v-if="isActive" class="icon_eye" @click.prevent="hidePassword" />
+                <b-icon-eye-slash-fill v-else class="icon_eye" @click.prevent="seePassword" />
               </div>
             </b-col>
             <div class="recovery_password">
@@ -47,7 +49,7 @@
             </div>
           </div>
           <div class="text_register2">
-            Quieres registrarte? <strong class="_text_strong">Registrate</strong>
+            Quieres registrarte? <strong class="_text_strong" @click.prevent="() => $emit('register')">Registrate</strong>
           </div>
         </b-form>
       </div>
@@ -63,6 +65,8 @@ import {
   BForm,
   BSpinner,
   BFormInput,
+  BIconEyeFill,
+  BIconEyeSlashFill,
 } from "bootstrap-vue";
 
 export default {
@@ -73,12 +77,28 @@ export default {
     BForm,
     BSpinner,
     BFormInput,
+    BIconEyeFill,
+    BIconEyeSlashFill,
   },
   data() {
     return {
       isBusy: false,
+      typeInput: 'password',
+      isActive: true,
     };
   },
+  methods: {
+    hidePassword() {
+      const me = this;
+      me.isActive = false;
+      me.typeInput = "text";
+    },
+    seePassword() {
+      const me = this;
+      me.isActive = true;
+      me.typeInput = "password";
+    }
+  }
 };
 </script>
 
@@ -101,7 +121,7 @@ export default {
   font-family: var(--fuente-poppins);
   font-style: normal;
   font-weight: 900;
-  font-size: 36.5385px;
+  font-size: 35px;
   line-height: 55px;
   text-align: center;
   letter-spacing: 0.065em;
@@ -121,30 +141,6 @@ export default {
 
 .form__content {
   text-align: left;
-}
-
-/* Input */
-.label_input {
-  font-family: var(--fuente-poppins);
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 21px;
-  letter-spacing: -0.103101px;
-  color: var(--white-color);
-}
-
-.form-control {
-  background: rgba(255, 255, 255, 0.47);
-  border: 2px solid var(--white-color);
-  box-sizing: border-box;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  height: 60px;
-}
-
-.form-control::placeholder {
-  color: var(--white-color);
 }
 
 .recovery_password {
@@ -262,7 +258,8 @@ export default {
 }
 
 ._text_strong {
-  color: #E487FB
+  color: #E487FB;
+  cursor: pointer;
 }
 
 /* ............. */

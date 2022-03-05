@@ -1,0 +1,157 @@
+/*sideBar*/
+.sideBar
+{
+	left: 0;
+	z-index: 100;
+	background-color: var(--primary-color);
+	border-right: 1px solid rgba(255, 255, 255, .4);
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	height: 100%;
+	transition: .8s ease-out;
+}
+
+.sideBar.active
+{
+	left: 0;
+}
+
+.sideBar .sideBar-ct
+{
+	width: 250px;
+	margin-bottom: 200px;
+}
+
+.sideBar-ct
+{
+	position: relative;
+	height: 100%;
+	padding: 0 10px;
+	padding-bottom: 30px;
+}
+
+.btn__closed--menu
+{
+	background-color: transparent;
+	color: var(--white-color);
+	font-size: 25px;
+	cursor: pointer;
+	display: none;
+}
+
+.btn__closed--menu:hover
+{
+	background-color: transparent;
+	color: var(--white-color);
+	font-size: 25px;
+}
+
+.sideBar-menu
+{
+	padding-top: 15px;
+	margin-bottom: 15px;
+}
+
+.sideBar-menu .item__menu
+{
+	padding-left: 49px;
+}
+
+.title__item {
+	font-family: var(--fuente-poppins);
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 27px;
+	letter-spacing: -0.103101px;
+	color: var(--white-color);
+	margin-bottom: 11px;
+}
+
+.title__item2 {
+	font-family: var(--fuente-poppins);
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 27px;
+	letter-spacing: -0.103101px;
+	color: var(--white-color);
+	margin-bottom: 11px;
+	cursor: pointer;
+}
+
+.item__menu ul li {
+	color: var(--white-color);
+}
+
+.item__menu ul li a{
+	font-family: var(--fuente-poppins);
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.103101px;
+	text-decoration-line: underline;
+	color: var(--white-color);
+	margin-bottom: 7px;
+	cursor: pointer;
+}
+
+.item__menu ul li a.router-link-exact-active
+{
+	color: #E487FB;
+}
+
+/*Media querys*/
+/*** VERSION ESCRITORIO Y TABLETS PANTALLS GRANDE ***/
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+	.sideBar
+	{
+		left: -300px;
+	}
+
+	.btn__closed--menu
+	{
+		display: inline-block;
+	}
+}
+
+/*** VERSION TABLETS ***/
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+	.sideBar
+	{
+		left: -300px;
+	}
+
+	.btn__closed--menu
+	{
+		display: inline-block;
+	}
+}
+
+/*** VERSION CELULAR ***/
+@media only screen and (max-width: 767px) {
+	.sideBar
+	{
+		left: -300px;
+	}
+
+	.btn__closed--menu
+	{
+		display: inline-block;
+	}
+
+	.sideBar .sideBar-ct
+	{
+		width: 230px;
+	}
+
+	.sideBar-menu .item__menu a
+	{
+		font-size: 14px;
+	}
+}
+
+/*** VERSION CELULAR PEQUEÑO ***/
+@media only screen and (max-width: 340px) {}

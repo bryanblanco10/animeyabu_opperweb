@@ -15,7 +15,9 @@
               {{ item.title_complement }}
             </strong>
           </div>
-          <div class="description_slider">{{ item.description }}</div>
+          <div class="d-flex justify-content-center">
+            <div class="description_slider">{{ item.description }}</div>
+          </div>
         </div>
       </template>
     </b-carousel-slide>
@@ -149,5 +151,6 @@ export default {
   line-height: 21px;
   text-align: center;
   color: var(--white-color);
+  width: 463px;
 }
 </style>

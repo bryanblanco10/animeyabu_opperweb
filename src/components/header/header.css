@@ -1,0 +1,68 @@
+/*Navbar*/
+.Navbar
+{
+	position: sticky;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	padding-left: 250px;
+	background-color: var(--black-color);
+	overflow: hidden;
+}
+
+.header__container
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 15px;
+	height: 50px;
+}
+
+
+.btn__bars
+{
+	color: #fff;
+	font-size: 18px;
+	border: none;
+	padding: 5px;
+	background-color: #E487FB;
+	transition: all .3s ease-in-out;
+	display: none;
+}
+
+/*-----------------*/
+
+/*Media querys*/
+/*** VERSION ESCRITORIO Y TABLETS PANTALLS GRANDE ***/
+@media only screen and (min-width: 992px) and (max-width: 1200px) {}
+/*** VERSION TABLETS ***/
+@media only screen and (min-width: 768px) and (max-width: 992px)
+{
+	.btn__bars
+	{
+		display: inline-block;
+	}
+
+	.Navbar
+	{
+		padding-left: 0px;
+		width: 100%;
+	}
+}
+/*** VERSION CELULAR ***/
+@media only screen and (max-width: 768px)
+{
+	.btn__bars
+	{
+		display: inline-block;
+	}
+
+	.Navbar
+	{
+		padding-left: 0px;
+		width: 100%;
+	}
+}
+/*** VERSION CELULAR PEQUEÑO ***/
+@media only screen and (max-width: 340px)
+{}

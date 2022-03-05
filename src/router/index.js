@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/login/Login'
-import Prueba from '../views/Prueba.vue'
+import Layout from '../components/layout/Layout.vue'
 
 Vue.use(VueRouter)
 
@@ -15,8 +15,25 @@ const routes = [
     component: Login,
   },
   {
-    path: '/prueba',
-    component: Prueba,
+    path: '/app',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        component: () =>
+          import(/* webpackChunkName: "dashboard"*/ "@/views/dashboard/Dashboard"),
+      },
+      {
+        path: '/listado-de-categorias',
+        component: () =>
+          import(/* webpackChunkName: "listCategories"*/ "@/views/categories/ListCategories"),
+      },
+      {
+        path: '/crear-categoria',
+        component: () =>
+          import(/* webpackChunkName: "createCategory"*/ "@/views/categories/CreateCategory"),
+      }
+    ]
   }
 ]
 

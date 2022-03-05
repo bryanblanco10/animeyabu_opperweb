@@ -31,3 +31,90 @@ html {
   margin: 0;
   padding: 0;
 }
+
+body {
+  margin: 0;
+}
+
+/* Input */
+.label_input {
+  font-family: var(--fuente-poppins);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.103101px;
+  color: var(--white-color);
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.47);
+  border: 2px solid var(--white-color);
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 60px;
+}
+
+.form-control::placeholder {
+  color: var(--white-color);
+}
+
+/* ----------------------- */
+
+.__strong {
+  color: #E487FB;
+}
+
+.content__admin
+{
+	right: 0;
+	z-index: 1;
+	padding-left: 255px;
+	background-color: var(--black-color);
+	height: 100vh;
+}
+
+/* icon eye */
+.icon_eye {
+  position: relative;
+  left: 300px;
+  top: -53px;
+  font-size: 30px;
+  cursor: pointer;
+  color: rgba(188, 177, 191, 1);
+}
+
+/* ............. */
+/*Media querys*/
+/*** VERSION ESCRITORIO Y TABLETS PANTALLS GRANDE ***/
+@media only screen and (min-width: 992px) and (max-width: 1200px) 
+{
+  .content__admin
+	{
+		width: 100%;
+		padding-left: 0;
+	}
+}
+/*** VERSION TABLETS ***/
+@media only screen and (min-width: 768px) and (max-width: 992px)
+{
+  .content__admin
+	{
+		width: 100%;
+		padding-left: 0;
+	}
+}
+/*** VERSION CELULAR ***/
+@media only screen and (max-width: 767px)
+{
+  .content__admin
+	{
+		width: 100%;
+		padding-left: 0;
+	}
+}
+
+/*** VERSION CELULAR PEQUEÑO ***/
+@media only screen and (max-width: 340px)
+{}
