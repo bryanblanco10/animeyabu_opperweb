@@ -100,7 +100,7 @@ export default {
   width: 548px;
   height: 548px;
   top: 63px;
-  background: #e487fb;
+  background: var(--second-color);
   z-index: 1;
   border-radius: 50%;
   display: flex;
@@ -133,7 +133,7 @@ export default {
 }
 
 ._strong_title_slider {
-  color: #e487fb;
+  color: var(--second-color);
   font-family: var(--fuente-roboto);
   font-style: normal;
   font-weight: 900;

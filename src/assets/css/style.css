@@ -3,11 +3,11 @@
   /*----Principales */
   --white-color: #ffff;
   --black-color: #000000;
-  --primary-color: #3E1149;
-  --second-color: #3264A6;
-  --third-color: #8DCBF2;
-  --fourth-color: #F2D43D;
-  --fifth-color:#D97904;
+  --primary-color: #CA38ED;
+  --second-color: #E487FB;
+  --third-color: #3E1149;
+  --fourth-color: #574E5A;
+  --fifth-color:#BCB1BF;
   --black-light-color: #ebebeb;
   --gray-light-color: #a8a4a4;
   --white_rgb: 255, 255, 255;
@@ -33,7 +33,44 @@ html {
 }
 
 body {
-  margin: 0;
+  min-height: 100vh;
+}
+
+
+button:focus,
+input:focus
+{
+  outline: none;
+  box-shadow: none !important;
+}
+
+input::-webkit-inner-spin-button
+{
+  -webkit-appearance: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border: 2px solid rgba(255, 255, 255, 0.47);
+  outline: 0 none;
 }
 
 /* Input */
@@ -60,19 +97,43 @@ body {
   color: var(--white-color);
 }
 
+.text_error {
+  font-family: var(--fuente-poppins);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: -0.103101px;
+  color: #AD3C40;
+  font-size: 14px;
+  position: relative;
+  top: -13px;
+}
+
+.right_ {
+  right: 30px;
+}
+
+.spinner-border {
+  top: 3px;
+  position: relative;
+  margin-right: 5px;
+}
+
 /* ----------------------- */
 
 .__strong {
-  color: #E487FB;
+  color: var(--second-color);
 }
 
 .content__admin
 {
-	right: 0;
 	z-index: 1;
 	padding-left: 255px;
 	background-color: var(--black-color);
-	height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 }
 
 /* icon eye */

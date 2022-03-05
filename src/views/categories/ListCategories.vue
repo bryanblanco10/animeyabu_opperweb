@@ -3,7 +3,7 @@
     <div class="title__">Listado de categorías</div>
     <b-row>
       <b-col 
-        lg="4" md="4" sm="12"
+        lg="4" md="6" sm="12"
         v-for="(item, index) in categories"
         :key="index"
       >

@@ -10,22 +10,59 @@
             <b-col lg="12" md="12" sm="12">
               <div role="group">
                 <label for="name" class="label_input">Email</label>
-                <b-form-input id="name" type="email" placeholder="usuario@" autofocus />
+                <b-form-input
+                  id="name"
+                  type="email"
+                  v-model="$v.formData.email.$model"
+                  @blur="$v.formData.email.$touch()"
+                  placeholder="usuario@"
+                  autofocus
+                />
+                <span
+                  v-if="$v.formData.email.$error"
+                  class="help-block text-left text_error"
+                >
+                  {{ messageValidation($v.formData.email) }}
+                </span>
               </div>
             </b-col>
             <b-col lg="12" md="12" sm="12">
-              <div role="group" style="height: 100px;">
+              <div role="group" style="height: 100px">
                 <label for="password" class="label_input">Contraseña</label>
-                <b-form-input id="password" :type="typeInput" />
-                <b-icon-eye-fill v-if="isActive" class="icon_eye" @click.prevent="hidePassword" />
-                <b-icon-eye-slash-fill v-else class="icon_eye" @click.prevent="seePassword" />
+                <b-form-input
+                  id="password"
+                  :type="typeInput"
+                  v-model="formData.password"
+                />
+                <b-icon-eye-fill
+                  v-if="isActive"
+                  class="icon_eye"
+                  @click.prevent="hidePassword"
+                />
+                <b-icon-eye-slash-fill
+                  v-else
+                  class="icon_eye"
+                  @click.prevent="seePassword"
+                />
+                <span
+                  v-if="$v.formData.password.$error"
+                  class="help-block text_error"
+                >
+                  {{ messageValidation($v.formData.password) }}
+                </span>
               </div>
             </b-col>
             <div class="recovery_password">
-              <a href="#" class="a_recovery_password"> ¿Olvido la contraseña? </a>
+              <a href="#" class="a_recovery_password">
+                ¿Olvido la contraseña?
+              </a>
             </div>
             <b-col lg="12" md="12" sm="12">
-              <b-button class="btn_login">
+              <b-button
+                class="btn_login"
+                :disabled="isBusy || $v.$invalid"
+                @click.prevent="login"
+              >
                 <b-spinner v-if="isBusy" small />
                 Acceder
               </b-button>
@@ -33,23 +70,28 @@
           </b-row>
           <div class="d-flex align-items-center">
             <div class="border_1" />
-            <div class="text_register"> Regístrate también con </div>
-            <div class="text_register_mobil"> Logueate con RRSS </div>
+            <div class="text_register">Regístrate también con</div>
+            <div class="text_register_mobil">Logueate con RRSS</div>
             <div class="border_2" />
           </div>
           <div class="icon_redes_sociales d-flex justify-content-center">
             <div class="icon_red">
-              <img src="@/assets/images/instagram.png" /> 
+              <img src="@/assets/images/instagram.png" />
             </div>
             <div class="icon_red">
-              <img src="@/assets/images/twitter.png" /> 
+              <img src="@/assets/images/twitter.png" />
             </div>
             <div class="icon_red">
-              <img src="@/assets/images/facebook.png" /> 
+              <img src="@/assets/images/facebook.png" />
             </div>
           </div>
           <div class="text_register2">
-            Quieres registrarte? <strong class="_text_strong" @click.prevent="() => $emit('register')">Registrate</strong>
+            Quieres registrarte?
+            <strong
+              class="_text_strong"
+              @click.prevent="() => $emit('register')"
+              >Registrate</strong
+            >
           </div>
         </b-form>
       </div>
@@ -68,6 +110,9 @@ import {
   BIconEyeFill,
   BIconEyeSlashFill,
 } from "bootstrap-vue";
+import { required, email } from "vuelidate/lib/validators";
+import actionCrud from "@/mixins/actionCrud";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -80,14 +125,33 @@ export default {
     BIconEyeFill,
     BIconEyeSlashFill,
   },
+  mixins: [actionCrud],
   data() {
     return {
-      isBusy: false,
-      typeInput: 'password',
+      typeInput: "password",
       isActive: true,
+      formData: {
+        email: "",
+        password: "",
+      },
     };
   },
+  validations: {
+    formData: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+      },
+    },
+  },
+  computed: {
+    ...mapState("login", ["isBusy"])
+  },
   methods: {
+    ...mapActions("login", ["login"]),
     hidePassword() {
       const me = this;
       me.isActive = false;
@@ -97,22 +161,24 @@ export default {
       const me = this;
       me.isActive = true;
       me.typeInput = "password";
-    }
-  }
+    },
+    login() {
+      const me = this;
+      me.$store.dispatch("login/login", me.formData);
+    },
+  },
 };
 </script>
 
 <style lang="css">
-
 .container_login {
   display: flex;
-	justify-content: center;
-	align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .login_content {
   position: relative;
-  top: 23.32px;
   text-align: center;
   width: 343px;
 }
@@ -144,9 +210,9 @@ export default {
 }
 
 .recovery_password {
-	position: relative;
-	margin-top: -15px;
-	text-align: right;
+  position: relative;
+  margin-top: -15px;
+  text-align: right;
   margin-bottom: 16px;
 }
 
@@ -158,16 +224,16 @@ export default {
   line-height: 21px;
   text-align: center;
   letter-spacing: -0.103101px;
-  color: #E487FB;
+  color: var(--second-color);
   text-decoration: none;
 }
 
 .a_recovery_password:hover {
-  color: #E487FB;
+  color: var(--second-color);
 }
 
 .btn_login {
-  background: #E487FB;
+  background: var(--second-color);
   border-radius: 10px;
   width: 100%;
   height: 60px;
@@ -177,13 +243,13 @@ export default {
   font-size: 16px;
   line-height: 17px;
   text-align: center;
-  color: #3E1149;
+  color: #3e1149;
   margin-bottom: 43px;
 }
 
 .btn_login:hover {
-  background: #3E1149;
-  color: #E487FB;
+  background: #3e1149;
+  color: var(--second-color);
 }
 
 .text_register {
@@ -258,39 +324,37 @@ export default {
 }
 
 ._text_strong {
-  color: #E487FB;
+  color: var(--second-color);
   cursor: pointer;
 }
 
 /* ............. */
-  /*Media querys*/
-  /*** VERSION ESCRITORIO Y TABLETS PANTALLS GRANDE ***/
-  @media only screen and (min-width: 992px) and (max-width: 1200px) 
-  {}
-  /*** VERSION TABLETS ***/
-  @media only screen and (min-width: 768px) and (max-width: 992px)
-  {}
-  /*** VERSION CELULAR ***/
-  @media only screen and (max-width: 767px)
-  {
-    .text_register {
-      display: none;
-    }
-    
-    .text_register_mobil {
-      display: block;
-    }
-
-    .recovery_password {
-      position: relative;
-      margin-top: -10px;
-      text-align: right;
-      margin-bottom: 16px;
-    }
+/*Media querys*/
+/*** VERSION ESCRITORIO Y TABLETS PANTALLS GRANDE ***/
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+}
+/*** VERSION TABLETS ***/
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+}
+/*** VERSION CELULAR ***/
+@media only screen and (max-width: 767px) {
+  .text_register {
+    display: none;
   }
 
-  /*** VERSION CELULAR PEQUEÑO ***/
-  @media only screen and (max-width: 340px)
-  {}
+  .text_register_mobil {
+    display: block;
+  }
 
+  .recovery_password {
+    position: relative;
+    margin-top: -10px;
+    text-align: right;
+    margin-bottom: 16px;
+  }
+}
+
+/*** VERSION CELULAR PEQUEÑO ***/
+@media only screen and (max-width: 340px) {
+}
 </style>

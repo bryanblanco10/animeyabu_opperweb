@@ -30,7 +30,7 @@ export default {
 .card_category {
   width: 246px;
   height: 124px;
-  background: #3e1149;
+  background: var(--third-color);
   border-radius: 5px;
   margin-bottom: 53px;
 }

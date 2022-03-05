@@ -1,18 +1,17 @@
 <template>
-  <div class="d-flex">
-    <div class="background_black">
+  <div class="main">
+    <div class="col-login">
       <header-login @back="back" />
       <registration-user @toAccess="back" v-if="isRegistration" />
       <login-form v-else @register="register" />
     </div>
-    <div class="background_primary">
+    <div class="col-slider">
       <slider-login />
     </div>
   </div>
 </template>
 
 <script>
-import {} from "bootstrap-vue";
 import LoginForm from "./components/LoginForm";
 import SliderLogin from "./components/SliderLogin";
 import HeaderLogin from "./components/HeaderLogin";
@@ -44,17 +43,21 @@ export default {
 </script>
 
 <style lang="css">
-
-.background_black {
-  background: var(--black-color);
+.main {
+  display: flex;
+  height: 100%;
   width: 100%;
-  height: auto;
+  min-height: 100vh;
 }
 
-.background_primary {
-  background: var(--primary-color);
+.main .col-login {
+  background: var(--black-color);
   width: 100%;
-  height: auto;
+}
+
+.main .col-slider {
+  background: var(--third-color);
+  width: 100%;
 }
 
 /* ............. */
@@ -64,21 +67,21 @@ export default {
 }
 /*** VERSION TABLETS ***/
 @media only screen and (min-width: 768px) and (max-width: 992px) {
-  .background_black {
+  .main .col-login {
     background: linear-gradient(180deg, #ca38ed -30.11%, #000000 100%);
   }
 
-  .background_primary {
+  .main .col-slider {
     display: none;
   }
 }
 /*** VERSION CELULAR ***/
 @media only screen and (max-width: 767px) {
-  .background_black {
+  .main .col-login {
     background: linear-gradient(180deg, #ca38ed -30.11%, #000000 100%);
   }
 
-  .background_primary {
+  .main .col-slider {
     display: none;
   }
 }

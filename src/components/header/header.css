@@ -21,11 +21,11 @@
 
 .btn__bars
 {
-	color: #fff;
+	color: var(--white-color);
 	font-size: 18px;
 	border: none;
 	padding: 5px;
-	background-color: #E487FB;
+	background-color: var(--second-color);
 	transition: all .3s ease-in-out;
 	display: none;
 }

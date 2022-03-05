@@ -5,19 +5,39 @@
         <b-col lg="12" md="12" sm="12">
           <div role="group">
             <label for="name" class="label_input">Razón social</label>
-            <b-form-input id="name" autofocus />
+            <b-form-input id="name" v-model="formData.razon_social" autofocus />
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
           <div role="group">
             <label for="nit" class="label_input">Nit</label>
-            <b-form-input id="nit" />
+            <b-form-input
+              id="nit"
+              v-model="$v.formData.NIT.$model"
+              @blur="$v.formData.NIT.$touch()"
+            />
+            <span
+              v-if="$v.formData.NIT.$error"
+              class="help-block text-left text_error"
+            >
+              {{ messageValidation($v.formData.NIT) }}
+            </span>
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
           <div role="group">
             <label for="phone" class="label_input">Teléfono</label>
-            <b-form-input id="phone" />
+            <b-form-input
+              id="phone"
+              v-model="$v.formData.telephone.$model"
+              @blur="$v.formData.telephone.$touch()"
+            />
+            <span
+              v-if="$v.formData.telephone.$error"
+              class="help-block text-left text_error"
+            >
+              {{ messageValidation($v.formData.telephone) }}
+            </span>
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
@@ -26,14 +46,26 @@
             <b-form-input
               id="email"
               type="email"
+              v-model="$v.formData.email.$model"
+              @blur="$v.formData.email.$touch()"
               placeholder="usuario@yabu.com"
             />
+            <span
+              v-if="$v.formData.email.$error"
+              class="help-block text-left text_error"
+            >
+              {{ messageValidation($v.formData.email) }}
+            </span>
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <div role="group" style="height: 100px;">
+          <div role="group" style="height: 100px">
             <label for="password" class="label_input">Contraseña</label>
-            <b-form-input id="password" :type="typeInput1" />
+            <b-form-input
+              id="password"
+              :type="typeInput1"
+              v-model="formData.password"
+            />
             <b-icon-eye-fill
               v-if="isActive1"
               class="icon_eye"
@@ -47,11 +79,16 @@
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <div role="group" style="height: 100px;">
+          <div role="group" style="height: 100px">
             <label for="confirmpassword" class="label_input"
               >Confirmar contraseña</label
             >
-            <b-form-input id="confirmpassword" :type="typeInput2" />
+            <b-form-input
+              id="confirmpassword"
+              :type="typeInput2"
+              v-model="$v.formData.password_confirmation.$model"
+              @blur="$v.formData.password_confirmation.$touch()"
+            />
             <b-icon-eye-fill
               v-if="isActive2"
               class="icon_eye active"
@@ -62,10 +99,16 @@
               class="icon_eye"
               @click.prevent="seePassword('2')"
             />
+            <span
+              v-if="$v.formData.password_confirmation.$error"
+              class="help-block text-left right_ text_error"
+            >
+              {{ messageValidation($v.formData.password_confirmation) }}
+            </span>
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <b-button class="btn_register">
+          <b-button class="btn_register" :disabled="isBusy || $v.$invalid" @click="register">
             <b-spinner v-if="isBusy" small />
             Registrar
           </b-button>
@@ -86,6 +129,17 @@ import {
   BIconEyeFill,
   BIconEyeSlashFill,
 } from "bootstrap-vue";
+import actionCrud from "@/mixins/actionCrud";
+import {
+  required,
+  email,
+  numeric,
+  minLength,
+  maxLength,
+  sameAs,
+} from "vuelidate/lib/validators";
+import { mapActions, mapState } from "vuex";
+
 export default {
   components: {
     BCol,
@@ -97,19 +151,61 @@ export default {
     BIconEyeFill,
     BIconEyeSlashFill,
   },
+  mixins: [actionCrud],
   data() {
     return {
-      isBusy: false,
       typeInput1: "password",
       typeInput2: "password",
       isActive1: true,
       isActive2: true,
+      formData: {
+        telephone: "",
+        NIT: "",
+        razon_social: "",
+        type_user_id: 1,
+        verify_tc: "1",
+        password: "",
+        password_confirmation: "",
+        email: "",
+      },
     };
   },
+  validations: {
+    formData: {
+      telephone: {
+        required,
+        numeric,
+        minLength: minLength(7),
+        maxLength: maxLength(15),
+      },
+      NIT: {
+        required,
+        numeric,
+      },
+      razon_social: {
+        required,
+      },
+      password: {
+        required,
+      },
+      password_confirmation: {
+        required,
+        sameAsPassword: sameAs('password')
+      },
+      email: {
+        required,
+        email,
+      },
+    },
+  },
+  computed: {
+    ...mapState("register", ["isBusy"])
+  },
   methods: {
+    ...mapActions("register", ["register"]),
     hidePassword(type) {
       const me = this;
-      if (type == '1' ) {
+      if (type == "1") {
         me.isActive1 = false;
         me.typeInput1 = "text";
       } else {
@@ -119,7 +215,7 @@ export default {
     },
     seePassword(type) {
       const me = this;
-      if (type == '1' ) {
+      if (type == "1") {
         me.isActive1 = true;
         me.typeInput1 = "password";
       } else {
@@ -127,7 +223,11 @@ export default {
         me.typeInput2 = "password";
       }
     },
-  }
+    register() {
+      const me = this;
+      me.$store.dispatch("register/register", me.formData);
+    },
+  },
 };
 </script>
 

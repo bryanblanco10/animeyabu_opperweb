@@ -3,7 +3,7 @@
 {
 	left: 0;
 	z-index: 100;
-	background-color: var(--primary-color);
+	background-color: var(--third-color);
 	border-right: 1px solid rgba(255, 255, 255, .4);
 	overflow: hidden;
 	position: fixed;
@@ -100,7 +100,7 @@
 
 .item__menu ul li a.router-link-exact-active
 {
-	color: #E487FB;
+	color: var(--second-color);
 }
 
 /*Media querys*/

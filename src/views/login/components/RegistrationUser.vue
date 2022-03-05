@@ -94,7 +94,6 @@ export default {
 
 .login_content {
   position: relative;
-  top: 23.32px;
   text-align: center;
   width: 343px;
 }
@@ -126,7 +125,7 @@ export default {
 }
 
 .btn_register {
-  background: #E487FB;
+  background: var(--second-color);
   border-radius: 10px;
   width: 100%;
   height: 60px;
@@ -143,7 +142,7 @@ export default {
 
 .btn_register:hover {
   background: #3E1149;
-  color: #E487FB;
+  color: var(--second-color);
 }
 
 .text_register {
@@ -218,7 +217,7 @@ export default {
 }
 
 ._text_strong {
-  color: #E487FB;
+  color: var(--second-color);
   cursor: pointer;
 }
 
@@ -230,7 +229,7 @@ export default {
 }
 
 .form-check-input:checked {
-  background-color: #E487FB;
+  background-color: var(--second-color);
   border-color: var(--white-color);
 }
 
