@@ -27,8 +27,8 @@
             </ul>
           </div>
           <div v-else>
-            <div v-if="item.path" @click="btnClosed">
-              <router-link  :to="item.path" class="title__item">{{ item.title }}</router-link>
+            <div class="title__item" v-if="item.path" @click="btnClosed">
+              <router-link :to="item.path">{{ item.title }}</router-link>
             </div>
             <div v-else  class="title__item2" @click.prevent="logout">{{ item.title }}</div>
           </div>

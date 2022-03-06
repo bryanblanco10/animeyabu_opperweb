@@ -58,8 +58,7 @@
 	padding-left: 49px;
 }
 
-.title__item,
-a.title__item {
+.title__item {
 	font-family: var(--fuente-poppins);
 	font-style: normal;
 	font-weight: bold;
@@ -71,7 +70,19 @@ a.title__item {
 	text-decoration: none;
 }
 
-.title__item:hover {
+.title__item a {
+	font-family: var(--fuente-poppins);
+	font-style: normal;
+	font-weight: bold;
+	font-size: 19px;
+	line-height: 27px;
+	letter-spacing: -0.103101px;
+	color: var(--white-color);
+	margin-bottom: 11px;
+	text-decoration: none;
+}
+
+.title__item a:hover {
 	color: var(--white-color);
 }
 
@@ -109,7 +120,7 @@ a.title__item {
 	color: var(--second-color);
 }
 
-.title__item.router-link-exact-active
+.title__item a.router-link-exact-active
 {
 	color: var(--second-color);
 }
@@ -156,11 +167,6 @@ a.title__item {
 	.sideBar .sideBar-ct
 	{
 		width: 230px;
-	}
-
-	.sideBar-menu .item__menu a
-	{
-		font-size: 14px;
 	}
 }
 
