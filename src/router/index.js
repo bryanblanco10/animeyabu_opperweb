@@ -47,7 +47,7 @@ const routes = [
         path: '/actualizar-categoria/:id',
         name: 'updateCategory',
         component: () =>
-          import(/* webpackChunkName: "createCategory"*/ "@/views/categories/CreateCategory"),
+          import(/* webpackChunkName: "createCategory"*/ "@/views/categories/UpdateCategory"),
         meta: {
           requireAuth: true,
         },

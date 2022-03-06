@@ -150,6 +150,17 @@ input[type="color"]:focus,
   color: rgba(188, 177, 191, 1);
 }
 
+.title__create {
+  font-family: var(--fuente-poppins);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 54px;
+  letter-spacing: -0.103101px;
+  color: var(--white-color);
+  margin-bottom: 39px;
+}
+
 /* style sweetalert */
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;

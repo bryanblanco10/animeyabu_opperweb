@@ -67,9 +67,9 @@ export default
     },
     find({ commit, state}, id) {
       try {
+        let category = null;
 
-        const category = state.categories.find(el => el.id == id);
-
+        if (id) category = state.categories.find(el => el.id == id);
         commit("setCategory", category);
       } catch (error) {
         console.log(error)

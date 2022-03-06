@@ -7,7 +7,7 @@ export default
 {
   namespaced: true,
   state: {
-    users: JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [],
+    users: null,
     isBusy: false,
   },
   getters: {},
@@ -15,6 +15,7 @@ export default
   actions: {
     async login({ state }, payload) {
       try {
+        state.users = JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : []
         state.isBusy = true;
         const user = {
           ...payload,

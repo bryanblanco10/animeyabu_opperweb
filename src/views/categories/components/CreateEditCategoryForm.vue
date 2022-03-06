@@ -73,8 +73,10 @@ export default {
   },
   mounted() {
     const me = this;
+
+    me.find(me.id);
+
     if (me.id) {
-      me.find(me.id);
       me.formData = { ...me.formData, ...me.getCategory };
       me.title = "Actualizar";
     } else {
