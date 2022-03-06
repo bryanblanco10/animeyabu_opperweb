@@ -3,7 +3,7 @@
     <div class="sideBar-ct">
       <!-- sideBar-title -->
       <div class="p-2">
-        <div class="btn__closed--menu" @click="btnClosed">
+        <div class="btn__closed--menu" @click.prevent="btnClosed">
           <b-icon-backspace-fill />
         </div>
         <div class="d-flex align-items-center">
@@ -15,24 +15,23 @@
       </div>
       <!-- SideBar - Menu -->
       <div class="sideBar-menu">
-        <div class="item__menu">
-            <router-link to="/app" class="title__item">Inicio</router-link>
-            <div class="title__item">Categorías</div>
+        <div class="item__menu" v-for="(item, index) in menus" :key="index">
+          <div v-if="item.lists">
+            <div class="title__item">{{ item.title }}</div>
             <ul>
-              <li>
-                <router-link to="/listado-de-categorias">
-                  Ver todas
-                </router-link>
-              </li>
-              <li>
-                <router-link to="/crear-categoria">
-                  Crear
+              <li v-for="(list, index) in item.lists" :key="index" @click.prevent="btnClosed">
+                <router-link :to="list.path">
+                  {{ list.text }}
                 </router-link>
               </li>
             </ul>
-        </div>
-        <div class="item__menu">
-            <div class="title__item2" @click.prevent="logout">Cerrar sesión</div>
+          </div>
+          <div v-else>
+            <div v-if="item.path" @click="btnClosed">
+              <router-link  :to="item.path" class="title__item">{{ item.title }}</router-link>
+            </div>
+            <div v-else  class="title__item2" @click.prevent="logout">{{ item.title }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -55,7 +54,29 @@ export default {
 
   data(){
     return {
-      user: {}
+      menus: [
+        {
+          title: 'Inicio',
+          path: '/app',
+        },
+        {
+          title: 'Categorías',
+          lists: [
+            {
+              text: 'Ver todas',
+              path: '/listado-de-categorias'
+            },
+            {
+              text: 'Crear',
+              path: '/crear-categoria'
+            }
+          ]
+        },
+        {
+          title: 'Cerrar sesión',
+          path: null,
+        }
+      ]
     }
   },
   computed: {},

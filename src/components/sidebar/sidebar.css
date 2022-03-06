@@ -58,7 +58,8 @@
 	padding-left: 49px;
 }
 
-.title__item {
+.title__item,
+a.title__item {
 	font-family: var(--fuente-poppins);
 	font-style: normal;
 	font-weight: bold;
