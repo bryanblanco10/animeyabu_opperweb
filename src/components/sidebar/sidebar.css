@@ -67,6 +67,11 @@
 	letter-spacing: -0.103101px;
 	color: var(--white-color);
 	margin-bottom: 11px;
+	text-decoration: none;
+}
+
+.title__item:hover {
+	color: var(--white-color);
 }
 
 .title__item2 {
@@ -99,6 +104,11 @@
 }
 
 .item__menu ul li a.router-link-exact-active
+{
+	color: var(--second-color);
+}
+
+.title__item.router-link-exact-active
 {
 	color: var(--second-color);
 }

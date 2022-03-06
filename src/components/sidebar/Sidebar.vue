@@ -16,6 +16,7 @@
       <!-- SideBar - Menu -->
       <div class="sideBar-menu">
         <div class="item__menu">
+            <router-link to="/app" class="title__item">Inicio</router-link>
             <div class="title__item">Categorías</div>
             <ul>
               <li>
@@ -31,7 +32,7 @@
             </ul>
         </div>
         <div class="item__menu">
-            <div class="title__item2">Cerrar sesión</div>
+            <div class="title__item2" @click.prevent="logout">Cerrar sesión</div>
         </div>
       </div>
     </div>
@@ -43,6 +44,7 @@ import {
   BIconBackspaceFill,
 } from "bootstrap-vue";
 import { actionLayout } from "@/mixins/layout";
+import { mapActions } from "vuex";
 
 export default {
   name: "Sidebar",
@@ -57,7 +59,9 @@ export default {
     }
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapActions("logout", ["logout"]),
+  },
 };
 </script>
 

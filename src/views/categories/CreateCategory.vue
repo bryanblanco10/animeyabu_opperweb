@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <div class="title__create">Crear categoría</div>
+    <div class="title__create">{{ title }}</div>
     <b-row>
       <b-col lg="4" md="4" sm="12">
         <create-edit-category-form />
@@ -17,7 +17,17 @@ export default {
     BRow,
     BCol,
     CreateEditCategoryForm
-  }
+  },
+  data() {
+    return {
+      id: this.$route.params.id,
+      title: null,
+    }
+  },
+  mounted() {
+    const me = this;
+    me.id ? me.title = 'Actualizar categoría' : me.title = 'Crear categoría';
+  },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="form__content">
-    <b-form>
+    <b-form @submit.prevent="sendData"> 
       <b-row>
         <b-col lg="12" md="12" sm="12">
           <div role="group">
@@ -15,6 +15,7 @@
               id="nit"
               v-model="$v.formData.NIT.$model"
               @blur="$v.formData.NIT.$touch()"
+              :class="{ error: $v.formData.NIT.$error }"
             />
             <span
               v-if="$v.formData.NIT.$error"
@@ -31,6 +32,7 @@
               id="phone"
               v-model="$v.formData.telephone.$model"
               @blur="$v.formData.telephone.$touch()"
+              :class="{ error: $v.formData.telephone.$error }"
             />
             <span
               v-if="$v.formData.telephone.$error"
@@ -48,6 +50,7 @@
               type="email"
               v-model="$v.formData.email.$model"
               @blur="$v.formData.email.$touch()"
+              :class="{ error: $v.formData.email.$error }"
               placeholder="usuario@yabu.com"
             />
             <span
@@ -88,6 +91,7 @@
               :type="typeInput2"
               v-model="$v.formData.password_confirmation.$model"
               @blur="$v.formData.password_confirmation.$touch()"
+              :class="{ error: $v.formData.password_confirmation.$error }"
             />
             <b-icon-eye-fill
               v-if="isActive2"
@@ -108,7 +112,7 @@
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <b-button class="btn_register" :disabled="isBusy || $v.$invalid" @click="register">
+          <b-button type="submit" class="btn_register" :disabled="isBusy || $v.$invalid">
             <b-spinner v-if="isBusy" small />
             Registrar
           </b-button>
@@ -129,7 +133,7 @@ import {
   BIconEyeFill,
   BIconEyeSlashFill,
 } from "bootstrap-vue";
-import actionCrud from "@/mixins/actionCrud";
+import validationMixin from "@/mixins/validationMixin";
 import {
   required,
   email,
@@ -151,7 +155,7 @@ export default {
     BIconEyeFill,
     BIconEyeSlashFill,
   },
-  mixins: [actionCrud],
+  mixins: [validationMixin],
   data() {
     return {
       typeInput1: "password",
@@ -223,9 +227,9 @@ export default {
         me.typeInput2 = "password";
       }
     },
-    register() {
+    sendData() {
       const me = this;
-      me.$store.dispatch("register/register", me.formData);
+      me.register(me.formData);
     },
   },
 };

@@ -5,18 +5,19 @@
       <div class="title_login">ひさしぶり!</div>
       <div class="subtitle_login">¡Hola, te extrañamos!</div>
       <div class="form__content">
-        <b-form>
+        <b-form @submit.prevent="sendData">
           <b-row>
             <b-col lg="12" md="12" sm="12">
               <div role="group">
-                <label for="name" class="label_input">Email</label>
+                <label for="email" class="label_input">Email</label>
                 <b-form-input
-                  id="name"
+                  id="email"
                   type="email"
                   v-model="$v.formData.email.$model"
                   @blur="$v.formData.email.$touch()"
                   placeholder="usuario@"
                   autofocus
+                  :class="{ error: $v.formData.email.$error }"
                 />
                 <span
                   v-if="$v.formData.email.$error"
@@ -59,9 +60,9 @@
             </div>
             <b-col lg="12" md="12" sm="12">
               <b-button
+                type="submit"
                 class="btn_login"
                 :disabled="isBusy || $v.$invalid"
-                @click.prevent="login"
               >
                 <b-spinner v-if="isBusy" small />
                 Acceder
@@ -111,7 +112,7 @@ import {
   BIconEyeSlashFill,
 } from "bootstrap-vue";
 import { required, email } from "vuelidate/lib/validators";
-import actionCrud from "@/mixins/actionCrud";
+import validationMixin from "@/mixins/validationMixin";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -125,7 +126,7 @@ export default {
     BIconEyeFill,
     BIconEyeSlashFill,
   },
-  mixins: [actionCrud],
+  mixins: [validationMixin],
   data() {
     return {
       typeInput: "password",
@@ -162,9 +163,9 @@ export default {
       me.isActive = true;
       me.typeInput = "password";
     },
-    login() {
+    sendData() {
       const me = this;
-      me.$store.dispatch("login/login", me.formData);
+      me.login(me.formData);
     },
   },
 };

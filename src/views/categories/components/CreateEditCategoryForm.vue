@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form>
+    <b-form @submit.prevent="saveData">
       <b-row>
         <b-col lg="12" md="12" sm="12">
           <div role="group">
@@ -9,9 +9,9 @@
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <b-button class="btn_register" :disabled="isBusy || $v.$invalid">
+          <b-button type="submit" class="btn_register" :disabled="isBusy || $v.$invalid">
             <b-spinner v-if="isBusy" small />
-            Crear
+            {{ title }}
           </b-button>
         </b-col>
       </b-row>
@@ -28,10 +28,11 @@ import {
   BSpinner,
   BFormInput,
 } from "bootstrap-vue";
-import actionCrud from "@/mixins/actionCrud";
+import validationMixin from "@/mixins/validationMixin";
 import {
   required,
 } from "vuelidate/lib/validators";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -42,13 +43,14 @@ export default {
     BSpinner,
     BFormInput,
   },
-  mixins: [actionCrud],
+  mixins: [validationMixin],
   data() {
     return {
-      isBusy: false,
+      id: this.$route.params.id,
       formData: {
         nombre: '',
-      }
+      },
+      title: null,
     };
   },
   validations: {
@@ -56,6 +58,28 @@ export default {
       nombre: {
         required,
       },
+    }
+  },
+  computed: {
+    ...mapState("category", ["isBusy"]),
+    ...mapGetters("category", ["getCategory"]),
+  },
+  methods: {
+    ...mapActions("category", ["save", "find"]),
+    saveData() {
+      const me = this;
+      me.save(me.formData);
+    }
+  },
+  mounted() {
+    const me = this;
+    if (me.id) {
+      me.find(me.id);
+      me.formData = { ...me.formData, ...me.getCategory };
+      me.title = "Actualizar";
+    } else {
+      me.formData = { ...me.formData, ...me.getCategory };
+      me.title = "Crear"
     }
   },
 };

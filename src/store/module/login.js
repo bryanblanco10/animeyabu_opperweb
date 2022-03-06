@@ -1,46 +1,56 @@
-import AuthRepository from "@/repositories/AuthRepository";
+// import AuthRepository from "@/repositories/AuthRepository";
 const API_KEY = process.env.VUE_APP_API_KEY;
-import { generateHash } from "@/utils";
+import { messageSweetAlert, generateHash, TestToken } from "@/utils";
+import router from '../../router'
 
 export default
 {
   namespaced: true,
   state: {
-    user: JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")) : "",
+    users: JSON.parse(localStorage.getItem("users")) ? JSON.parse(localStorage.getItem("users")) : [],
     isBusy: false,
   },
-  getters: {
-    getUser(state) {
-      return state.user;
-    },
-  },
-  mutations: {
-    setUser(state, user) {
-      state.user = user
-    },
-  },
+  getters: {},
+  mutations: {},
   actions: {
-    async login({ commit, state }, payload) {
-      const user = null
+    async login({ state }, payload) {
       try {
         state.isBusy = true;
-        const res = await AuthRepository.login({
+        const user = {
           ...payload,
           apiKey: API_KEY,
           utcTimeStamp: new Date(),
           signature: await generateHash(),
-        });
-        console.log(res)
+        }
+        
+        const { email, password } = user;
+
+        const users = state.users;
+        const hasUser = users.find(el => el.email == email && el.password == password);
+
+        if (!hasUser) {
+          return messageSweetAlert('error', 'Email o contraseña incorrectos');
+        }
+
+        const { token } = TestToken();
+        
+        localStorage.setItem("access_token", token);
+        localStorage.setItem("authenticated", true);
+        localStorage.setItem("user", JSON.stringify(hasUser));
+        
+        router.push("/listado-de-categorias");
+        // const res = await AuthRepository.login({
+        //   ...payload,
+        //   apiKey: API_KEY,
+        //   utcTimeStamp: new Date(),
+        //   signature: await generateHash(),
+        // });
+        // console.log(res)
       } catch (error) {
         console.log(error)
       } finally {
         state.isBusy = false;
       }
-      // localStorage.setItem("user", JSON.stringify(user));
-      // localStorage.setItem("access_token", token);
-      // localStorage.setItem("authenticated", true);
-
-      commit("setUser", user);
     },
   },
 }

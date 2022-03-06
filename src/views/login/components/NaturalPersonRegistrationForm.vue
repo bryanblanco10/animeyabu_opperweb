@@ -1,6 +1,6 @@
 <template>
   <div class="form__content">
-    <b-form>
+    <b-form @submit.prevent="sendData">
       <b-row>
         <b-col lg="12" md="12" sm="12">
           <div role="group">
@@ -21,6 +21,7 @@
               id="phone"
               v-model="$v.formData.telephone.$model"
               @blur="$v.formData.telephone.$touch()"
+              :class="{ error: $v.formData.telephone.$error }"
             />
             <span
               v-if="$v.formData.telephone.$error"
@@ -39,6 +40,7 @@
               id="identification"
               v-model="$v.formData.identy_document.$model"
               @blur="$v.formData.identy_document.$touch()"
+              :class="{ error: $v.formData.identy_document.$error }"
             />
             <span
               v-if="$v.formData.identy_document.$error"
@@ -56,6 +58,7 @@
               type="email"
               v-model="$v.formData.email.$model"
               @blur="$v.formData.email.$touch()"
+              :class="{ error: $v.formData.email.$error }"
               placeholder="usuario@yabu.com"
             />
             <span
@@ -96,6 +99,7 @@
               :type="typeInput2"
               v-model="$v.formData.password_confirmation.$model"
               @blur="$v.formData.password_confirmation.$touch()"
+              :class="{ error: $v.formData.password_confirmation.$error }"
             />
             <b-icon-eye-fill
               v-if="isActive2"
@@ -116,7 +120,7 @@
           </div>
         </b-col>
         <b-col lg="12" md="12" sm="12">
-          <b-button class="btn_register" :disabled="isBusy || $v.$invalid">
+          <b-button type="submit" class="btn_register" :disabled="isBusy || $v.$invalid">
             <b-spinner v-if="isBusy" small />
             Registrar
           </b-button>
@@ -137,7 +141,7 @@ import {
   BIconEyeFill,
   BIconEyeSlashFill,
 } from "bootstrap-vue";
-import actionCrud from "@/mixins/actionCrud";
+import validationMixin from "@/mixins/validationMixin";
 import {
   required,
   email,
@@ -146,6 +150,7 @@ import {
   maxLength,
   sameAs,
 } from "vuelidate/lib/validators";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -158,10 +163,9 @@ export default {
     BIconEyeFill,
     BIconEyeSlashFill,
   },
-  mixins: [actionCrud],
+  mixins: [validationMixin],
   data() {
     return {
-      isBusy: false,
       typeInput1: "password",
       typeInput2: "password",
       isActive1: true,
@@ -210,7 +214,11 @@ export default {
       },
     },
   },
+  computed: {
+    ...mapState("register", ["isBusy"])
+  },
   methods: {
+    ...mapActions("register", ["register"]),
     hidePassword(type) {
       const me = this;
       if (type == "1") {
@@ -230,6 +238,10 @@ export default {
         me.isActive2 = true;
         me.typeInput2 = "password";
       }
+    },
+    sendData() {
+      const me = this;
+      me.register(me.formData);
     },
   },
 };

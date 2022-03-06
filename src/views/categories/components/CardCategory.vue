@@ -4,8 +4,8 @@
       class="card_category d-flex justify-content-center align-items-center"
       no-body
     >
-      <div class="title_category">{{ item.title }}</div>
-      <div class="btn_edit">Editar</div>
+      <div class="title_category">{{ item.nombre }}</div>
+      <div class="btn_edit" @click.prevent="edit(item.id)">Editar</div>
     </b-card>
 
   </div>
@@ -13,6 +13,7 @@
 
 <script>
 import { BCard } from "bootstrap-vue";
+
 export default {
   components: {
     BCard,
@@ -21,6 +22,12 @@ export default {
     item: {
       type: Object,
       default: null,
+    }
+  },
+  methods: {
+    edit(id) {
+      const me = this;
+      me.$router.push({ name: "updateCategory", params: { id }});
     }
   }
 };
@@ -60,5 +67,6 @@ export default {
   position: relative;
   top: 30px;
   left: 95px;
+  cursor: pointer;
 }
 </style>
